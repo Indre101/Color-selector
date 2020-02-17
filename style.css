@@ -1,0 +1,12 @@
+.colorOutput {
+  width: 300px;
+  background-color: #ccc;
+}
+
+input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  height: 100px;
+}
