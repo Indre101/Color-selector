@@ -1,15 +1,21 @@
-const colorInput = document.querySelector("input");
-const hexColorCode = document.querySelector(".hexColorCode");
-const rgbColor = document.querySelector(".rgbColor");
-const hslColor = document.querySelector(".hslColor");
+const HTML = {}
+window.addEventListener("DOMContentLoaded", init)
 
-colorInput.addEventListener("input", displayColorValues)
+function init() {
+  HTML.colorInput = document.querySelector("input");
+  HTML.hexColorCode = document.querySelector(".hexColorCode");
+  HTML.rgbColor = document.querySelector(".rgbColor");
+  HTML.hslColor = document.querySelector(".hslColor");
+  HTML.colorInput.addEventListener("input", displayColorValues);
+
+}
+
 
 function displayColorValues() {
   let colorCode = (event.target).value
-  hexColorCode.textContent = "HEX: " + colorCode
-  rgbColor.textContent = "RGB: " + hextToRGB(colorCode).join(", ")
-  hslColor.textContent = "HSL: " + getHSlColor(hextToRGB(colorCode));
+  HTML.hexColorCode.textContent = "HEX: " + colorCode
+  HTML.rgbColor.textContent = "RGB: " + hextToRGB(colorCode).join(", ")
+  HTML.hslColor.textContent = "HSL: " + getHSlColor(hextToRGB(colorCode));
 }
 
 
