@@ -18,12 +18,6 @@ function displayColorValues() {
   HTML.hslColor.textContent = "HSL: " + getHSlColor(hextToRGB(colorCode));
 }
 
-
-
-let r;
-let b;
-let g;
-
 function getHSlColor(convertedArrToRGbValues) {
   r = convertedArrToRGbValues[0];
   g = convertedArrToRGbValues[1];
