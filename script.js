@@ -71,6 +71,6 @@ function rgbToHsl(r, g, b) {
   s *= 100;
   l *= 100;
 
-  return `(${parseInt(h)}, ${parseInt(s)}%, ${parseInt(l)}% )`; // just for testing
+  return `(${parseInt(h)}, ${parseInt(s)}%, ${parseInt(l)}% )`;
 
 }
