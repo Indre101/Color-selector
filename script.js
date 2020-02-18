@@ -7,7 +7,6 @@ function init() {
   HTML.rgbColor = document.querySelector(".rgbColor");
   HTML.hslColor = document.querySelector(".hslColor");
   HTML.colorInput.addEventListener("input", displayColorValues);
-
 }
 
 

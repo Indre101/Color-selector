@@ -1,8 +1,19 @@
 * {}
 
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .colorOutput {
   width: 300px;
   background-color: #ccc;
+}
+
+form {
+  align-self: center;
 }
 
 input {
@@ -11,4 +22,28 @@ input {
   margin: 0;
   border: none;
   height: 100px;
+}
+
+
+.colorBlocks {
+  display: flex;
+  margin: auto 1vw 1vw 1vw;
+  box-sizing: border-box;
+}
+
+.colorBlock {
+  width: 300px;
+  height: 300px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.color {
+  height: 150px;
+  border: 1px solid black;
+}
+
+h3 {
+  padding: 0 1vw;
 }
