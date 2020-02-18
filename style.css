@@ -1,8 +1,9 @@
-* {}
+* {
+  box-sizing: border-box;
+}
 
 
 body {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -12,12 +13,16 @@ body {
   background-color: #ccc;
 }
 
-form {
-  align-self: center;
+.inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100vw;
 }
 
+
+form {}
+
 input {
-  width: 100%;
   padding: 0;
   margin: 0;
   border: none;
@@ -46,4 +51,23 @@ input {
 
 h3 {
   padding: 0 1vw;
+}
+
+.inputValue {
+  display: flex;
+  align-items: center;
+}
+
+.inputValue label {
+  padding-left: 1vw;
+}
+
+.colorOptions {
+  grid-area: 1/1/span 1/ span 1;
+}
+
+.colorInput {
+  grid-area: 1/1/ span 1/ span 2;
+  align-self: center;
+  justify-self: center;
 }

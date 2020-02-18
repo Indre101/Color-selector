@@ -10,12 +10,49 @@
 
 <body>
 
-  <form action="">
-    <div class="colorOutput">
-      <h2>Color picker</h2>
-      <input type="color" value="">
-    </div>
-  </form>
+  <div class="inputs">
+
+    <form class="colorOptions" action="">
+      <div class="inputValue">
+        <input type="radio" id="Analogous" value="Analogous">
+        <label for="Analogous">Analogous</label><br>
+      </div>
+      <div class="inputValue">
+
+        <input type="radio" id="Monochromatic" value="Monochromatic">
+        <label for="Monochromatic">Monochromatic</label><br>
+      </div>
+      <div class="inputValue">
+
+        <input type="radio" id="Triad" value="Triad">
+        <label for="Triad">Triad</label><br><br>
+      </div>
+
+      <div class="inputValue">
+
+        <input type="radio" id="Complementary" value="Complementary">
+        <label for="Complementary">Complementary</label><br><br>
+      </div>
+
+      <div class="inputValue">
+
+        <input type="radio" id="Compound" value="Compound">
+        <label for="Compound">Compound</label><br><br>
+      </div>
+
+      <div class="inputValue">
+
+        <input type="radio" id="Shades" value="Shades">
+        <label for="Shades">Shades</label><br><br>
+      </div>
+
+    </form>
+
+    <form class="colorInput" action="">
+      <input type="color">
+    </form>
+
+  </div>
 
   <div class="colorBlocks">
     <div class="colorBlock">
@@ -31,7 +68,7 @@
       <h3 class="hslColor">HSL:</h3>
     </div>
     <div class="colorBlock">
-      <div class="color"></div>
+      <div class="color mainColor"></div>
       <h3 class="hexColorCode">HEX:</h3>
       <h3 class="rgbColor">RGB:</h3>
       <h3 class="hslColor">HSL:</h3>
