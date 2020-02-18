@@ -7,6 +7,7 @@ function init() {
   HTML.mainColorBlock = document.querySelector(".mainColor .color");
   HTML.rgbColor = document.querySelector(".mainColor .rgbColor");
   HTML.hslColor = document.querySelector(".mainColor .hslColor");
+  HTML.hslDifferentHues = document.querySelectorAll(".hsl");
   HTML.colorInput.addEventListener("input", getColorInputValue);
 }
 
@@ -18,10 +19,13 @@ function getColorInputValue() {
 function displayColorValues(colorCode) {
   const rgb = hextToRGB(colorCode);
   const hsl = getHSlColor(colorCode);
+  console.log(hsl);
   HTML.hexColorCode.textContent = "HEX: " + colorCode;
   HTML.rgbColor.textContent = "RGB: " + `(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   HTML.hslColor.textContent = `HSL: (${hsl.h}, ${hsl.s}%, ${hsl.l}% )`;
   HTML.mainColorBlock.style.backgroundColor = colorCode;
+
+  displayAnalogusColors(hsl);
 }
 
 function getHSlColor(colorCode) {
@@ -30,6 +34,22 @@ function getHSlColor(colorCode) {
   b = hextToRGB(colorCode).b;
   hsl = rgbToHsl(r, g, b);
   return hsl;
+}
+
+function calculateAnalogusColors(hsl, counter) {
+
+
+  return hsl.h;
+}
+
+
+
+function displayAnalogusColors(hsl) {
+  let counter = 0;
+  HTML.hslDifferentHues.forEach(element => {
+    element.textContent = `HSL: (${calculateAnalogusColors(hsl, counter)}, ${hsl.s}%, ${hsl.l}% )`;
+    counter++;
+  });
 }
 
 function hextToRGB(colorCode) {
@@ -55,7 +75,6 @@ function rgbToHsl(r, g, b) {
   g /= 255;
   b /= 255;
   let h, s, l;
-
   const min = Math.min(r, g, b);
   const max = Math.max(r, g, b);
 
@@ -152,5 +171,3 @@ function RGBToHex(r, g, b) {
 
   return "#" + r + g + b;
 }
-
-console.log(RGBToHex(100, 120, 155));
