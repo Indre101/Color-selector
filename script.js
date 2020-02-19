@@ -2,7 +2,7 @@ const HTML = {};
 window.addEventListener("DOMContentLoaded", init);
 
 function init() {
-  HTML.colorTemplate = document.querySelector(".color").content;
+  HTML.colorTemplate = document.querySelector(".colorSwatchTemplate").content;
   HTML.colorSwatchesContainer = document.querySelector(".colorBlocks");
   HTML.colorInput = document.querySelector(".colorInput");
   HTML.colorInput.addEventListener("input", getColorInputValue);
@@ -57,7 +57,6 @@ function displayMainColorValues(colorSwatch) {
   const rgbColorCodes = document.querySelectorAll(".rgbColor");
   const hslColorCodes = document.querySelectorAll(".hslColor");
   const colorBlock = document.querySelectorAll(".color");
-
   hexColorCodes[
     colorSwatches.indexOf(colorSwatch)
   ].textContent = `HEX: ${colorSwatch.hex}`;
@@ -177,7 +176,6 @@ function HSLToRGB(h, s, l) {
 
   if (h < 0) {
     h *= -1;
-    console.log(h);
   }
   s /= 100;
   l /= 100;
@@ -217,8 +215,6 @@ function HSLToRGB(h, s, l) {
   r = Math.round((r + m) * 255);
   g = Math.round((g + m) * 255);
   b = Math.round((b + m) * 255);
-
-  console.log(h);
 
   const rgb = {};
   rgb.r = r;
