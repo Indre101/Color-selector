@@ -51,7 +51,8 @@ function assignMainColorValues(colorCode) {
       // changeToAnalogousValues();
       // triad();
       // complimentrary();
-      compound();
+      // compound();
+      shades();
     }
   });
 }
@@ -153,6 +154,18 @@ function compound() {
     }
     colorSwatch.hsl.s = colorSwatches[2].hsl.s;
     colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function shades() {
+  let value = colorSwatches[2].hsl.l;
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.l = value += 16;
+    }
+    colorSwatch.hsl.h = colorSwatches[2].hsl.h;
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
     setOtherShadesColorValues(colorSwatch);
   });
 }
