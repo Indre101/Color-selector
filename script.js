@@ -5,11 +5,20 @@ function init() {
   HTML.colorTemplate = document.querySelector(".colorSwatchTemplate").content;
   HTML.colorSwatchesContainer = document.querySelector(".colorBlocks");
   HTML.colorInput = document.querySelector(".colorInput");
-  HTML.input = document.querySelectorAll("input");
-  getTheCheckedInput();
+  HTML.input = document.querySelectorAll("input[type='radio']");
+  HTML.input.forEach(element => {
+    element.addEventListener("click", getClickedInput);
+  });
 
   HTML.colorInput.addEventListener("input", getColorInputValue);
   createColorSwatches();
+}
+
+function getClickedInput(e) {
+  HTML.input.forEach(f => {
+    f.checked = false;
+  });
+  event.target.checked = true;
 }
 
 function getColorInputValue() {
@@ -49,11 +58,11 @@ function assignMainColorValues(colorCode) {
     mainColorSwatch.rgb.g,
     mainColorSwatch.rgb.b
   );
-  console.log("object");
-  console.log(getTheCheckedInput());
   const startingValueH = mainColorSwatch.hsl.h;
   const startingValueS = mainColorSwatch.hsl.s;
   const startingValueL = mainColorSwatch.hsl.l;
+
+  getTheCheckedInput();
   colorSwatches.forEach(colorSwatch => {
     colorSwatch.hsl = mainColorSwatch.hsl;
 
@@ -68,7 +77,7 @@ function assignMainColorValues(colorCode) {
     } else if (getTheCheckedInput().value === "Complementary") {
       complimentrary(colorSwatch);
     } else if (getTheCheckedInput().value === "Compound") {
-      compound(colorSwatch);
+      compound(colorSwatch, startingValueH);
     } else if (getTheCheckedInput().value === "Shades") {
       shades(colorSwatch);
     }
@@ -92,13 +101,15 @@ const getTheCheckedInput = () => {
   return inputFieldChecked;
 };
 
-function compound(colorSwatch) {
+function compound(colorSwatch, originalValueH) {
   if (
     colorSwatches.indexOf(colorSwatch) !== 2 &&
     colorSwatches.indexOf(colorSwatch) === 0
   ) {
     colorSwatch.hsl.h -= 180;
     setOtherShadesColorValues(colorSwatch);
+  } else if (colorSwatches.indexOf(colorSwatch) === 2) {
+    colorSwatch.hsl.h = originalValueH;
   } else if (colorSwatches.indexOf(colorSwatch) !== 2) {
     colorSwatch.hsl.h += 16;
     setOtherShadesColorValues(colorSwatch);
