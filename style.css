@@ -6,6 +6,7 @@
 body {
   display: flex;
   flex-direction: column;
+  height: 90vh;
 }
 
 .colorOutput {
@@ -15,12 +16,11 @@ body {
 
 .inputs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   width: 100vw;
 }
 
 
-form {}
 
 input {
   padding: 0;
@@ -64,12 +64,16 @@ h3 {
 }
 
 .colorOptions {
-  grid-area: 1/1/span 1/ span 1;
+  display: flex;
+  justify-content: space-around;
   padding-left: 1vw;
 }
 
 .colorInput {
-  grid-area: 1/1/ span 1/ span 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   align-self: center;
   justify-self: center;
 }
