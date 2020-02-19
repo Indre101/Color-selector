@@ -53,20 +53,22 @@ function assignMainColorValues(colorCode) {
 }
 
 function displayMainColorValues(colorSwatch) {
-  console.log("object", colorSwatch);
   const hexColorCodes = document.querySelectorAll(".hexColorCode");
   const rgbColorCodes = document.querySelectorAll(".rgbColor");
   const hslColorCodes = document.querySelectorAll(".hslColor");
+  const colorBlock = document.querySelectorAll(".color");
 
   hexColorCodes[
     colorSwatches.indexOf(colorSwatch)
   ].textContent = `HEX: ${colorSwatch.hex}`;
   rgbColorCodes[
     colorSwatches.indexOf(colorSwatch)
-  ].textContent = `RGb: (${colorSwatch.rgb.r}, ${colorSwatch.rgb.g}, ${colorSwatch.rgb.b})}`;
+  ].textContent = `RGb: (${colorSwatch.rgb.r}, ${colorSwatch.rgb.g}, ${colorSwatch.rgb.b})`;
   hslColorCodes[
     colorSwatches.indexOf(colorSwatch)
-  ].textContent = `HSL: (${colorSwatch.hsl.h}, ${colorSwatch.hsl.s}, ${colorSwatch.hsl.l})}`;
+  ].textContent = `HSL: (${colorSwatch.hsl.h}, ${colorSwatch.hsl.s}%, ${colorSwatch.hsl.l}%)`;
+  colorBlock[colorSwatches.indexOf(colorSwatch)].style.backgroundColor =
+    colorSwatch.hex;
 }
 
 function changeToAnalogousValues() {
@@ -81,6 +83,18 @@ function changeToAnalogousValues() {
     }
     colorSwatch.hsl.s = colorSwatches[2].hsl.s;
     colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+
+    colorSwatch.rgb = HSLToRGB(
+      colorSwatch.hsl.h,
+      colorSwatch.hsl.s,
+      colorSwatch.hsl.l
+    );
+
+    colorSwatch.hex = RGBToHex(
+      colorSwatch.rgb.r,
+      colorSwatch.rgb.g,
+      colorSwatch.rgb.b
+    );
     displayMainColorValues(colorSwatch);
   });
 }
@@ -160,6 +174,11 @@ let newArr = [];
 
 function HSLToRGB(h, s, l) {
   // Must be fractions of 1
+
+  if (h < 0) {
+    h *= -1;
+    console.log(h);
+  }
   s /= 100;
   l /= 100;
 
@@ -199,12 +218,14 @@ function HSLToRGB(h, s, l) {
   g = Math.round((g + m) * 255);
   b = Math.round((b + m) * 255);
 
-  return "rgb(" + r + "," + g + "," + b + ")";
-}
+  console.log(h);
 
-console.log(HSLToRGB(0, 10, 82));
-console.log(HSLToRGB(300, 40, 82));
-console.log(HSLToRGB(140, 50, 82));
+  const rgb = {};
+  rgb.r = r;
+  rgb.g = g;
+  rgb.b = b;
+  return rgb;
+}
 
 // hsl(283, 100%, 50%)
 
