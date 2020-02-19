@@ -1,5 +1,8 @@
 * {
   box-sizing: border-box;
+  font-family: fantasy;
+  border-radius: 15px;
+
 }
 
 
@@ -7,6 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 90vh;
+  background-color: #cccc;
 }
 
 .colorOutput {
@@ -26,6 +30,7 @@ input {
   padding: 0;
   margin: 0;
   border: none;
+  background-color: #ccc;
   height: 100px;
 }
 
@@ -34,24 +39,26 @@ input {
   display: flex;
   margin: auto 1vw 1vw 1vw;
   box-sizing: border-box;
+  justify-content: center;
 }
 
 .colorBlock {
   width: 300px;
-  height: 300px;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
 }
 
 .color,
 .mainColorSwatch {
   height: 150px;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 h3 {
   padding: 0 1vw;
+  font-size: 1.5vw;
 }
 
 .inputValue {
@@ -60,7 +67,8 @@ h3 {
 }
 
 .inputValue label {
-  padding-left: 1vw;
+  padding-left: 0.5vw;
+  font-size: 1.5vw;
 }
 
 .colorOptions {
@@ -76,4 +84,15 @@ h3 {
   flex-direction: column;
   align-self: center;
   justify-self: center;
+}
+
+.inputValue:first-child,
+.inputValue:last-child {
+  align-self: flex-end;
+}
+
+.inputValue:nth-child(3),
+.inputValue:nth-child(4) {
+  align-self: flex-start;
+
 }

@@ -172,7 +172,7 @@ function displayMainColorValues(colorSwatch) {
   ].textContent = `HEX: ${colorSwatch.hex}`;
   rgbColorCodes[
     colorSwatches.indexOf(colorSwatch)
-  ].textContent = `RGb: (${colorSwatch.rgb.r}, ${colorSwatch.rgb.g}, ${colorSwatch.rgb.b})`;
+  ].textContent = `RGB: (${colorSwatch.rgb.r}, ${colorSwatch.rgb.g}, ${colorSwatch.rgb.b})`;
   hslColorCodes[
     colorSwatches.indexOf(colorSwatch)
   ].textContent = `HSL: (${colorSwatch.hsl.h}, ${colorSwatch.hsl.s}%, ${colorSwatch.hsl.l}%)`;
