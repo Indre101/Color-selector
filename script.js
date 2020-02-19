@@ -2,30 +2,175 @@ const HTML = {};
 window.addEventListener("DOMContentLoaded", init);
 
 function init() {
+  HTML.colorTemplate = document.querySelector(".colorSwatchTemplate").content;
+  HTML.colorSwatchesContainer = document.querySelector(".colorBlocks");
   HTML.colorInput = document.querySelector(".colorInput");
-  HTML.hexColorCode = document.querySelector(".mainColor .hexColorCode");
-  HTML.mainColorBlock = document.querySelector(".mainColor .color");
-  HTML.rgbColor = document.querySelector(".mainColor .rgbColor");
-  HTML.hslColor = document.querySelector(".mainColor .hslColor");
-  HTML.hslDifferentHues = document.querySelectorAll(".hsl");
   HTML.colorInput.addEventListener("input", getColorInputValue);
+  createColorSwatches();
 }
 
 function getColorInputValue() {
   let colorCode = event.target.value;
-  displayColorValues(colorCode);
+  assignMainColorValues(colorCode);
 }
 
-function displayColorValues(colorCode) {
-  const rgb = hextToRGB(colorCode);
-  const hsl = getHSlColor(colorCode);
-  console.log(hsl);
-  HTML.hexColorCode.textContent = "HEX: " + colorCode;
-  HTML.rgbColor.textContent = "RGB: " + `(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-  HTML.hslColor.textContent = `HSL: (${hsl.h}, ${hsl.s}%, ${hsl.l}% )`;
-  HTML.mainColorBlock.style.backgroundColor = colorCode;
+const ColorSwatch = {
+  rgb: {},
+  hsl: {},
+  hex: ""
+};
 
-  displayAnalogusColors(hsl);
+const colorSwatches = [];
+
+function createColorSwatches() {
+  for (let index = 0; index < 5; index++) {
+    const colorSwatch = Object.create(ColorSwatch);
+    colorSwatches.push(colorSwatch);
+  }
+  displayColorSwatches();
+}
+
+function displayColorSwatches() {
+  colorSwatches.forEach(e => {
+    const colorSwatchCln = HTML.colorTemplate.cloneNode(true);
+    HTML.colorSwatchesContainer.appendChild(colorSwatchCln);
+  });
+}
+
+function assignMainColorValues(colorCode) {
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) === 2) {
+      colorSwatch.hex = colorCode;
+      colorSwatch.rgb = hextToRGB(colorSwatch.hex);
+      colorSwatch.hsl = rgbToHsl(
+        colorSwatch.rgb.r,
+        colorSwatch.rgb.g,
+        colorSwatch.rgb.b
+      );
+      // monochromatic();
+      // changeToAnalogousValues();
+      // triad();
+      // complimentrary();
+      compound();
+    }
+  });
+}
+
+function displayMainColorValues(colorSwatch) {
+  const hexColorCodes = document.querySelectorAll(".hexColorCode");
+  const rgbColorCodes = document.querySelectorAll(".rgbColor");
+  const hslColorCodes = document.querySelectorAll(".hslColor");
+  const colorBlock = document.querySelectorAll(".color");
+  hexColorCodes[
+    colorSwatches.indexOf(colorSwatch)
+  ].textContent = `HEX: ${colorSwatch.hex}`;
+  rgbColorCodes[
+    colorSwatches.indexOf(colorSwatch)
+  ].textContent = `RGb: (${colorSwatch.rgb.r}, ${colorSwatch.rgb.g}, ${colorSwatch.rgb.b})`;
+  hslColorCodes[
+    colorSwatches.indexOf(colorSwatch)
+  ].textContent = `HSL: (${colorSwatch.hsl.h}, ${colorSwatch.hsl.s}%, ${colorSwatch.hsl.l}%)`;
+  colorBlock[colorSwatches.indexOf(colorSwatch)].style.backgroundColor =
+    colorSwatch.hex;
+}
+
+function changeToAnalogousValues() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches[2].hsl.h = value;
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) < 2) {
+      colorSwatch.hsl.h = value -= 16;
+    } else if (colorSwatches.indexOf(colorSwatch) > 2) {
+      value = colorSwatches[2].hsl.h += 16;
+      colorSwatch.hsl.h = value;
+    }
+
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function monochromatic() {
+  let mainColorValueS = colorSwatches[2].hsl.s;
+  let mainColorValueL = colorSwatches[2].hsl.l;
+
+  colorSwatches.forEach(colorSwatch => {
+    if (
+      colorSwatches.indexOf(colorSwatch) % 2 === 0 &&
+      colorSwatches.indexOf(colorSwatch) !== 2
+    ) {
+      colorSwatch.hsl.s = mainColorValueS += 16;
+      colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    } else if (
+      colorSwatches.indexOf(colorSwatch) % 2 !== 0 &&
+      colorSwatches.indexOf(colorSwatch) !== 2
+    ) {
+      colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+      colorSwatch.hsl.l = mainColorValueL -= 16;
+    }
+    colorSwatch.hsl.h = colorSwatches[2].hsl.h;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function triad() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.h = value -= 60;
+    }
+
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function complimentrary() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.h = value -= 90;
+    }
+
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function compound() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches.forEach(colorSwatch => {
+    if (
+      colorSwatches.indexOf(colorSwatch) !== 2 &&
+      colorSwatches.indexOf(colorSwatch) === 0
+    ) {
+      colorSwatch.hsl.h = value - 180;
+    } else if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.h = value += 16;
+    }
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function setOtherShadesColorValues(colorSwatch) {
+  colorSwatch.rgb = HSLToRGB(
+    colorSwatch.hsl.h,
+    colorSwatch.hsl.s,
+    colorSwatch.hsl.l
+  );
+
+  colorSwatch.hex = RGBToHex(
+    colorSwatch.rgb.r,
+    colorSwatch.rgb.g,
+    colorSwatch.rgb.b
+  );
+
+  displayMainColorValues(colorSwatch);
 }
 
 function getHSlColor(colorCode) {
@@ -34,22 +179,6 @@ function getHSlColor(colorCode) {
   b = hextToRGB(colorCode).b;
   hsl = rgbToHsl(r, g, b);
   return hsl;
-}
-
-function calculateAnalogusColors(hsl, counter) {
-
-
-  return hsl.h;
-}
-
-
-
-function displayAnalogusColors(hsl) {
-  let counter = 0;
-  HTML.hslDifferentHues.forEach(element => {
-    element.textContent = `HSL: (${calculateAnalogusColors(hsl, counter)}, ${hsl.s}%, ${hsl.l}% )`;
-    counter++;
-  });
 }
 
 function hextToRGB(colorCode) {
@@ -115,7 +244,14 @@ function rgbToHsl(r, g, b) {
   return hsl;
 }
 
+let newArr = [];
+
 function HSLToRGB(h, s, l) {
+  // Must be fractions of 1
+
+  if (h < 0) {
+    h *= -1;
+  }
   s /= 100;
   l /= 100;
 
@@ -155,7 +291,11 @@ function HSLToRGB(h, s, l) {
   g = Math.round((g + m) * 255);
   b = Math.round((b + m) * 255);
 
-  return "rgb(" + r + "," + g + "," + b + ")";
+  const rgb = {};
+  rgb.r = r;
+  rgb.g = g;
+  rgb.b = b;
+  return rgb;
 }
 
 // hsl(283, 100%, 50%)
