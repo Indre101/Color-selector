@@ -107,13 +107,12 @@ function compound(colorSwatch, originalValueH) {
     colorSwatches.indexOf(colorSwatch) === 0
   ) {
     colorSwatch.hsl.h -= 180;
-    setOtherShadesColorValues(colorSwatch);
   } else if (colorSwatches.indexOf(colorSwatch) === 2) {
     colorSwatch.hsl.h = originalValueH;
   } else if (colorSwatches.indexOf(colorSwatch) !== 2) {
     colorSwatch.hsl.h += 16;
-    setOtherShadesColorValues(colorSwatch);
   }
+  setOtherShadesColorValues(colorSwatch);
 }
 
 function complimentrary(colorSwatch) {
