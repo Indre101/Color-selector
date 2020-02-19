@@ -70,8 +70,6 @@ function assignMainColorValues(colorCode) {
       changeToAnalogousValues(colorSwatch, startingValueH);
     } else if (getTheCheckedInput().value === "Monochromatic") {
       monochromatic(colorSwatch);
-    } else if (getTheCheckedInput().value === "Monochromatic") {
-      monochromatic(colorSwatch);
     } else if (getTheCheckedInput().value === "Triad") {
       triad(colorSwatch);
     } else if (getTheCheckedInput().value === "Complementary") {
@@ -101,18 +99,19 @@ const getTheCheckedInput = () => {
   return inputFieldChecked;
 };
 
-function compound(colorSwatch, originalValueH) {
+function compound(colorSwatch, startingValueH) {
   if (
     colorSwatches.indexOf(colorSwatch) !== 2 &&
-    colorSwatches.indexOf(colorSwatch) === 0
+    colorSwatches.indexOf(colorSwatch) === 1
   ) {
     colorSwatch.hsl.h -= 180;
+    setOtherShadesColorValues(colorSwatch);
   } else if (colorSwatches.indexOf(colorSwatch) === 2) {
-    colorSwatch.hsl.h = originalValueH;
+    colorSwatch.hsl.h = startingValueH;
   } else if (colorSwatches.indexOf(colorSwatch) !== 2) {
     colorSwatch.hsl.h += 16;
+    setOtherShadesColorValues(colorSwatch);
   }
-  setOtherShadesColorValues(colorSwatch);
 }
 
 function complimentrary(colorSwatch) {
@@ -125,8 +124,8 @@ function complimentrary(colorSwatch) {
 function triad(colorSwatch) {
   if (colorSwatches.indexOf(colorSwatch) !== 2) {
     colorSwatch.hsl.h -= 60;
+    setOtherShadesColorValues(colorSwatch);
   }
-  setOtherShadesColorValues(colorSwatch);
 }
 
 function monochromatic(colorSwatch, stratingValueS, startingValueL) {
@@ -135,13 +134,14 @@ function monochromatic(colorSwatch, stratingValueS, startingValueL) {
     colorSwatches.indexOf(colorSwatch) !== 2
   ) {
     colorSwatch.hsl.s += 16;
+    setOtherShadesColorValues(colorSwatch);
   } else if (
     colorSwatches.indexOf(colorSwatch) % 2 !== 0 &&
     colorSwatches.indexOf(colorSwatch) !== 2
   ) {
     colorSwatch.hsl.l -= 16;
+    setOtherShadesColorValues(colorSwatch);
   }
-  setOtherShadesColorValues(colorSwatch);
 }
 
 function changeToAnalogousValues(colorSwatch, startingValueH) {
@@ -158,8 +158,8 @@ function changeToAnalogousValues(colorSwatch, startingValueH) {
 function shades(colorSwatch, mainColorSwatch, startingValuel) {
   if (colorSwatch !== mainColorSwatch) {
     colorSwatch.hsl.l += 10;
+    setOtherShadesColorValues(colorSwatch);
   }
-  setOtherShadesColorValues(colorSwatch);
 }
 
 function displayMainColorValues(colorSwatch) {
