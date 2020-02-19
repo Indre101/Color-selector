@@ -47,7 +47,9 @@ function assignMainColorValues(colorCode) {
         colorSwatch.rgb.g,
         colorSwatch.rgb.b
       );
-      changeToAnalogousValues();
+      // monochromatic();
+      // changeToAnalogousValues();
+      triad();
     }
   });
 }
@@ -80,22 +82,63 @@ function changeToAnalogousValues() {
       value = colorSwatches[2].hsl.h += 16;
       colorSwatch.hsl.h = value;
     }
+    console.log(colorSwatches[2].hsl.h);
     colorSwatch.hsl.s = colorSwatches[2].hsl.s;
     colorSwatch.hsl.l = colorSwatches[2].hsl.l;
-
-    colorSwatch.rgb = HSLToRGB(
-      colorSwatch.hsl.h,
-      colorSwatch.hsl.s,
-      colorSwatch.hsl.l
-    );
-
-    colorSwatch.hex = RGBToHex(
-      colorSwatch.rgb.r,
-      colorSwatch.rgb.g,
-      colorSwatch.rgb.b
-    );
-    displayMainColorValues(colorSwatch);
+    setOtherShadesColorValues(colorSwatch);
   });
+}
+
+function monochromatic() {
+  let mainColorValueS = colorSwatches[2].hsl.s;
+  let mainColorValueL = colorSwatches[2].hsl.l;
+
+  colorSwatches.forEach(colorSwatch => {
+    if (
+      colorSwatches.indexOf(colorSwatch) % 2 === 0 &&
+      colorSwatches.indexOf(colorSwatch) !== 2
+    ) {
+      colorSwatch.hsl.s = mainColorValueS += 16;
+      colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    } else if (
+      colorSwatches.indexOf(colorSwatch) % 2 !== 0 &&
+      colorSwatches.indexOf(colorSwatch) !== 2
+    ) {
+      colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+      colorSwatch.hsl.l = mainColorValueL -= 16;
+    }
+    colorSwatch.hsl.h = colorSwatches[2].hsl.h;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function triad() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.h = value -= 60;
+    }
+    console.log(colorSwatches[2].hsl.h);
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function setOtherShadesColorValues(colorSwatch) {
+  colorSwatch.rgb = HSLToRGB(
+    colorSwatch.hsl.h,
+    colorSwatch.hsl.s,
+    colorSwatch.hsl.l
+  );
+
+  colorSwatch.hex = RGBToHex(
+    colorSwatch.rgb.r,
+    colorSwatch.rgb.g,
+    colorSwatch.rgb.b
+  );
+
+  displayMainColorValues(colorSwatch);
 }
 
 function getHSlColor(colorCode) {
