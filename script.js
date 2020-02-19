@@ -49,7 +49,9 @@ function assignMainColorValues(colorCode) {
       );
       // monochromatic();
       // changeToAnalogousValues();
-      triad();
+      // triad();
+      // complimentrary();
+      compound();
     }
   });
 }
@@ -82,7 +84,7 @@ function changeToAnalogousValues() {
       value = colorSwatches[2].hsl.h += 16;
       colorSwatch.hsl.h = value;
     }
-    console.log(colorSwatches[2].hsl.h);
+
     colorSwatch.hsl.s = colorSwatches[2].hsl.s;
     colorSwatch.hsl.l = colorSwatches[2].hsl.l;
     setOtherShadesColorValues(colorSwatch);
@@ -118,7 +120,37 @@ function triad() {
     if (colorSwatches.indexOf(colorSwatch) !== 2) {
       colorSwatch.hsl.h = value -= 60;
     }
-    console.log(colorSwatches[2].hsl.h);
+
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function complimentrary() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches.forEach(colorSwatch => {
+    if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.h = value -= 90;
+    }
+
+    colorSwatch.hsl.s = colorSwatches[2].hsl.s;
+    colorSwatch.hsl.l = colorSwatches[2].hsl.l;
+    setOtherShadesColorValues(colorSwatch);
+  });
+}
+
+function compound() {
+  let value = colorSwatches[2].hsl.h;
+  colorSwatches.forEach(colorSwatch => {
+    if (
+      colorSwatches.indexOf(colorSwatch) !== 2 &&
+      colorSwatches.indexOf(colorSwatch) === 0
+    ) {
+      colorSwatch.hsl.h = value - 180;
+    } else if (colorSwatches.indexOf(colorSwatch) !== 2) {
+      colorSwatch.hsl.h = value += 16;
+    }
     colorSwatch.hsl.s = colorSwatches[2].hsl.s;
     colorSwatch.hsl.l = colorSwatches[2].hsl.l;
     setOtherShadesColorValues(colorSwatch);
