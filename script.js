@@ -5,6 +5,9 @@ function init() {
   HTML.colorTemplate = document.querySelector(".colorSwatchTemplate").content;
   HTML.colorSwatchesContainer = document.querySelector(".colorBlocks");
   HTML.colorInput = document.querySelector(".colorInput");
+  HTML.input = document.querySelectorAll("input");
+  getTheCheckedInput();
+
   HTML.colorInput.addEventListener("input", getColorInputValue);
   createColorSwatches();
 }
@@ -46,26 +49,48 @@ function assignMainColorValues(colorCode) {
     mainColorSwatch.rgb.g,
     mainColorSwatch.rgb.b
   );
-
+  console.log("object");
+  console.log(getTheCheckedInput());
   const startingValueH = mainColorSwatch.hsl.h;
   const startingValueS = mainColorSwatch.hsl.s;
   const startingValueL = mainColorSwatch.hsl.l;
   colorSwatches.forEach(colorSwatch => {
     colorSwatch.hsl = mainColorSwatch.hsl;
-    // changeToAnalogousValues(colorSwatch, startingValueH);
-    // shades(colorSwatch, mainColorSwatch, startingValueL);
-    // monochromatic(colorSwatch);
-    // triad(colorSwatch);
-    // complimentrary(colorSwatch);
-    compound(colorSwatch);
+
+    if (getTheCheckedInput().value === "Analogous") {
+      changeToAnalogousValues(colorSwatch, startingValueH);
+    } else if (getTheCheckedInput().value === "Monochromatic") {
+      monochromatic(colorSwatch);
+    } else if (getTheCheckedInput().value === "Monochromatic") {
+      monochromatic(colorSwatch);
+    } else if (getTheCheckedInput().value === "Triad") {
+      triad(colorSwatch);
+    } else if (getTheCheckedInput().value === "Complementary") {
+      complimentrary(colorSwatch);
+    } else if (getTheCheckedInput().value === "Compound") {
+      compound(colorSwatch);
+    } else if (getTheCheckedInput().value === "Shades") {
+      shades(colorSwatch);
+    }
   });
 
   mainColorSwatch.hsl.h = startingValueH;
   mainColorSwatch.hsl.s = startingValueS;
   mainColorSwatch.hsl.l = startingValueL;
   displayMainColorValues(mainColorSwatch);
-  console.log("mainColorSwatch, ", mainColorSwatch);
 }
+
+const getTheCheckedInput = () => {
+  let inputFieldChecked;
+  HTML.input.forEach(inputField => {
+    if (inputField.checked) {
+      inputFieldChecked = inputField;
+    } else {
+      return false;
+    }
+  });
+  return inputFieldChecked;
+};
 
 function compound(colorSwatch) {
   if (
@@ -107,8 +132,6 @@ function monochromatic(colorSwatch, stratingValueS, startingValueL) {
     colorSwatch.hsl.l -= 16;
   }
   setOtherShadesColorValues(colorSwatch);
-
-  console.log(colorSwatches.indexOf(colorSwatch), colorSwatch);
 }
 
 function changeToAnalogousValues(colorSwatch, startingValueH) {
